@@ -1,5 +1,7 @@
 import { ControllerRenderProps } from 'react-hook-form'
 
+import { FormValues } from '@/lib/constants'
+
 type FormProps<K extends 'sector' | 'agreedToTerms'> = ControllerRenderProps<
   {
     sector: {
@@ -12,4 +14,6 @@ type FormProps<K extends 'sector' | 'agreedToTerms'> = ControllerRenderProps<
   K
 >
 
-export type { FormProps }
+type LocalStorageItem = Partial<FormValues & { id: string }>
+
+export type { FormProps, LocalStorageItem as LocalStorageKey }

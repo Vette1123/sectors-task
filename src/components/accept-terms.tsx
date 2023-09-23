@@ -19,7 +19,7 @@ export const AcceptTerms = ({
         onCheckedChange={onCheckedChange}
       />
       <label
-        htmlFor="terms"
+        htmlFor={props.id}
         className="cursor-pointer text-sm font-medium leading-none peer-disabled:cursor-not-allowed peer-disabled:opacity-70"
       >
         Accept terms and conditions

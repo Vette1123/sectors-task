@@ -36,3 +36,21 @@ pnpm install
 
 pnpm run dev
 ```
+
+### Usage `git clone`
+
+Alternatively, you can clone this repository using the following commands:
+
+```bash
+git clone https://github.com/Vette1123/sectors-task
+```
+
+Then, you can install the dependencies and run the project using the following commands:
+
+```bash
+pnpm install
+```
+
+```bash
+pnpm run dev
+```

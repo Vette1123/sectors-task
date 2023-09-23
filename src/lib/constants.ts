@@ -441,10 +441,13 @@ const formDefaultValues: Partial<FormValues> = {
   agreedToTerms: false,
 }
 
+const LOCAL_STORAGE_KEY = 'profile'
+
 export {
   SECTORS,
   SECTOR_INITIAL_VALUE,
   formSchema,
   formDefaultValues,
   type FormValues,
+  LOCAL_STORAGE_KEY,
 }

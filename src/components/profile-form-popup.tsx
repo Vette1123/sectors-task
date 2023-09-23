@@ -1,3 +1,6 @@
+import React from 'react'
+
+import { LocalStorageKey } from '@/types/form'
 import { Button } from '@/components/ui/button'
 import {
   Dialog,
@@ -10,21 +13,37 @@ import {
 import { Separator } from '@/components/ui/separator'
 import { ProfileForm } from '@/components/profile-form'
 
-export function FormPopup() {
+interface FormPopupProps {
+  isEditForm?: boolean
+  info?: LocalStorageKey
+}
+
+export function FormPopup({ isEditForm = false, info }: FormPopupProps) {
+  const [isOpen, setIsOpen] = React.useState(false)
   return (
-    <Dialog>
+    <Dialog open={isOpen} onOpenChange={setIsOpen}>
       <DialogTrigger asChild>
-        <Button variant="outline">Edit Profile</Button>
+        <Button variant={isEditForm ? 'secondary' : 'outline'}>
+          {isEditForm ? 'Edit Profile' : 'Add Profile'}
+        </Button>
       </DialogTrigger>
       <DialogContent className="max-w-screen-sm">
         <DialogHeader>
-          <DialogTitle>Add Profile</DialogTitle>
+          <DialogTitle>
+            {isEditForm ? 'Edit Profile' : 'Add Profile'}
+          </DialogTitle>
           <DialogDescription>
-            Please fill in the form below to add a new profile.
+            Please fill in the form below to
+            {isEditForm ? ' edit ' : ' add '}
+            your profile.
           </DialogDescription>
         </DialogHeader>
         <Separator />
-        <ProfileForm />
+        <ProfileForm
+          setIsOpen={setIsOpen}
+          isEditForm={isEditForm}
+          info={info}
+        />
       </DialogContent>
     </Dialog>
   )

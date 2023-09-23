@@ -1,3 +1,4 @@
+import ProfileInfoProvider from '@/context/infos-context'
 import { HomePage } from '@/pages/home'
 import { NotFound } from '@/pages/not-found'
 import { Routes as BrowserRoutes, Route } from 'react-router-dom'
@@ -9,8 +10,14 @@ export const Routes = () => {
     <main className="font-rubik">
       <SiteHeader />
       <BrowserRoutes>
-        <Route index element={<HomePage />} />
-
+        <Route
+          index
+          element={
+            <ProfileInfoProvider>
+              <HomePage />
+            </ProfileInfoProvider>
+          }
+        />
         {/* Using path="*"" means "match anything", so this route
             acts like a catch-all for URLs that we don't have explicit
             routes for. */}
