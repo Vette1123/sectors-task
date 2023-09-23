@@ -1,5 +1,7 @@
-import { Fragment } from 'react'
+import { forwardRef, Fragment } from 'react'
 
+import { FormProps } from '@/types/form'
+import { Sector } from '@/types/sector'
 import { SECTORS } from '@/lib/constants'
 import { Button } from '@/components/ui/button'
 import {
@@ -12,11 +14,20 @@ import {
 } from '@/components/ui/dropdown-menu'
 import SubMenuOptions from '@/components/sub-content'
 
-export function DropdownMenuDemo() {
+export const SectorsMenu = forwardRef<
+  HTMLButtonElement,
+  FormProps<'sector'> & { children?: React.ReactNode }
+>(({ ...props }, ref) => {
+  const selectedSector = props?.value?.name
+  const onSelectChange = (value: Sector) => {
+    props.onChange(value)
+  }
   return (
     <DropdownMenu>
-      <DropdownMenuTrigger asChild>
-        <Button variant="outline">Open</Button>
+      <DropdownMenuTrigger asChild className="block">
+        <Button variant="outline" ref={ref}>
+          {selectedSector || 'Select a sector'}
+        </Button>
       </DropdownMenuTrigger>
       <DropdownMenuContent className="w-56">
         <DropdownMenuGroup>
@@ -50,7 +61,12 @@ export function DropdownMenuDemo() {
                                         <Fragment
                                           key={`${childChildChildren?.name}-${index}`}
                                         >
-                                          <DropdownMenuItem>
+                                          <DropdownMenuItem
+                                            {...props}
+                                            onSelect={() =>
+                                              onSelectChange(childChildChildren)
+                                            }
+                                          >
                                             {childChildChildren?.name}
                                           </DropdownMenuItem>
                                           {index !==
@@ -66,7 +82,10 @@ export function DropdownMenuDemo() {
                               </Fragment>
                             ) : (
                               <Fragment key={`${childChildren?.name}-${index}`}>
-                                <DropdownMenuItem>
+                                <DropdownMenuItem
+                                  {...props}
+                                  onSelect={() => onSelectChange(childChildren)}
+                                >
                                   {childChildren?.name}
                                 </DropdownMenuItem>
                                 {index !== child?.children?.length - 1 && (
@@ -82,7 +101,12 @@ export function DropdownMenuDemo() {
                       </Fragment>
                     ) : (
                       <Fragment key={`${child?.name}-${index}`}>
-                        <DropdownMenuItem>{child?.name}</DropdownMenuItem>
+                        <DropdownMenuItem
+                          {...props}
+                          onSelect={() => onSelectChange(child)}
+                        >
+                          {child?.name}
+                        </DropdownMenuItem>
                         {index !== value?.children?.length - 1 && (
                           <DropdownMenuSeparator />
                         )}
@@ -96,7 +120,12 @@ export function DropdownMenuDemo() {
               </Fragment>
             ) : (
               <Fragment key={`${value?.name}`}>
-                <DropdownMenuItem>{value?.name}</DropdownMenuItem>
+                <DropdownMenuItem
+                  {...props}
+                  onSelect={() => onSelectChange(value)}
+                >
+                  {value?.name}
+                </DropdownMenuItem>
               </Fragment>
             )
           )}
@@ -104,4 +133,4 @@ export function DropdownMenuDemo() {
       </DropdownMenuContent>
     </DropdownMenu>
   )
-}
+})

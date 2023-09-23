@@ -1,3 +1,5 @@
+import { z } from 'zod'
+
 const SECTORS = {
   manufacturing: {
     name: 'Manufacturing',
@@ -407,4 +409,42 @@ const SECTORS = {
   },
 }
 
-export { SECTORS }
+const SECTOR_INITIAL_VALUE = {
+  name: '',
+  value: '',
+}
+
+const formSchema = z.object({
+  name: z
+    .string()
+    .min(2, {
+      message: 'Name must be at least 2 characters.',
+    })
+    .max(30, {
+      message: 'Name must not be longer than 30 characters.',
+    }),
+  sector: z.object({
+    name: z.string().nonempty(),
+    value: z.string().nonempty(),
+  }),
+  agreedToTerms: z.boolean().refine((val) => val, {
+    message: 'You must agree to the terms to continue.',
+  }),
+})
+
+type FormValues = z.infer<typeof formSchema>
+
+// This can come from your database or API.
+const formDefaultValues: Partial<FormValues> = {
+  name: '',
+  sector: SECTOR_INITIAL_VALUE,
+  agreedToTerms: false,
+}
+
+export {
+  SECTORS,
+  SECTOR_INITIAL_VALUE,
+  formSchema,
+  formDefaultValues,
+  type FormValues,
+}

@@ -1,6 +1,5 @@
 import { Separator } from '@/components/ui/separator'
-import { AccountForm } from '@/components/form'
-import { DropdownMenuDemo } from '@/components/sectors-selector'
+import { FormPopup } from '@/components/profile-form-popup'
 
 export const HomePage = () => {
   return (
@@ -10,8 +9,7 @@ export const HomePage = () => {
         in.
       </h2>
       <Separator className="mb-6 mt-2" />
-      <AccountForm />
-      <DropdownMenuDemo />
+      <FormPopup />
     </section>
   )
 }
